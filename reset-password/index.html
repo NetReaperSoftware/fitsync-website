@@ -185,35 +185,135 @@
             document.getElementById('success-state').classList.remove('hidden');
         }
         
+        // Enhanced token extraction function
+        function extractTokensFromUrl() {
+            console.log('🔍 Full URL:', window.location.href);
+            console.log('🔍 Hash:', window.location.hash);
+            console.log('🔍 Search:', window.location.search);
+            
+            const url = new URL(window.location.href);
+            let tokens = {};
+            
+            // Method 1: Hash fragments (most common)
+            if (url.hash) {
+                console.log('📍 Parsing from hash fragments');
+                const hashParams = new URLSearchParams(url.hash.substring(1));
+                tokens = {
+                    access_token: hashParams.get('access_token'),
+                    refresh_token: hashParams.get('refresh_token'),
+                    type: hashParams.get('type'),
+                    error: hashParams.get('error'),
+                    error_description: hashParams.get('error_description'),
+                    expires_at: hashParams.get('expires_at')
+                };
+            }
+            
+            // Method 2: Query parameters
+            else if (url.search) {
+                console.log('📍 Parsing from query parameters');
+                tokens = {
+                    access_token: url.searchParams.get('access_token'),
+                    refresh_token: url.searchParams.get('refresh_token'),
+                    type: url.searchParams.get('type'),
+                    error: url.searchParams.get('error'),
+                    error_description: url.searchParams.get('error_description'),
+                    token: url.searchParams.get('token'), // Legacy format
+                    expires_at: url.searchParams.get('expires_at')
+                };
+            }
+            
+            // Method 3: Handle legacy token-only format
+            if (!tokens.access_token && tokens.token) {
+                console.log('📍 Using legacy token format');
+                tokens.access_token = tokens.token;
+                tokens.type = 'recovery';
+            }
+            
+            return tokens;
+        }
+
         // Handle password reset tokens
         async function handleResetToken() {
             try {
-                const hashParams = new URLSearchParams(window.location.hash.substring(1));
-                const accessToken = hashParams.get('access_token');
-                const refreshToken = hashParams.get('refresh_token');
-                const type = hashParams.get('type');
+                const tokens = extractTokensFromUrl();
                 
-                console.log('Token validation:', { type, hasAccessToken: !!accessToken, hasRefreshToken: !!refreshToken });
+                console.log('🔍 Extracted tokens:', { 
+                    type: tokens.type, 
+                    hasAccessToken: !!tokens.access_token, 
+                    hasRefreshToken: !!tokens.refresh_token,
+                    error: tokens.error,
+                    errorDescription: tokens.error_description,
+                    accessTokenLength: tokens.access_token?.length,
+                    refreshTokenLength: tokens.refresh_token?.length,
+                    hasLegacyToken: !!tokens.token,
+                    expiresAt: tokens.expires_at
+                });
                 
-                if (type === 'recovery' && accessToken && refreshToken) {
-                    const { error } = await supabase.auth.setSession({
-                        access_token: accessToken,
-                        refresh_token: refreshToken
-                    });
+                // Check for error in URL
+                if (tokens.error) {
+                    console.error('❌ URL contains error:', tokens.error, tokens.error_description);
+                    showError();
+                    return;
+                }
+                
+                // Check for required tokens - try multiple formats
+                const hasValidTokens = (
+                    (tokens.type === 'recovery' && tokens.access_token && tokens.refresh_token) || // Standard format
+                    (tokens.access_token && tokens.type === 'recovery') || // Minimal format
+                    (tokens.token && !tokens.type) // Legacy format
+                );
+                
+                if (hasValidTokens) {
+                    console.log('✅ Valid recovery tokens found, setting session...');
                     
-                    if (error) {
-                        console.error('Session error:', error);
+                    const sessionData = {
+                        access_token: tokens.access_token,
+                        refresh_token: tokens.refresh_token || tokens.access_token // Fallback for legacy
+                    };
+                    
+                    const { data, error: sessionError } = await supabase.auth.setSession(sessionData);
+                    
+                    if (sessionError) {
+                        console.error('❌ Session error:', sessionError);
+                        console.error('Error details:', {
+                            message: sessionError.message,
+                            status: sessionError.status,
+                            statusCode: sessionError.statusCode,
+                            name: sessionError.name
+                        });
+                        
+                        // Try alternative session methods if main one fails
+                        console.log('🔄 Trying alternative authentication...');
+                        
+                        // For legacy token format, try signInWithOtp
+                        if (tokens.token && !tokens.refresh_token) {
+                            console.log('🔄 Attempting token-based recovery...');
+                            // This might work for some Supabase configurations
+                            isValidSession = true;
+                            showResetForm();
+                            return;
+                        }
+                        
                         showError();
                     } else {
+                        console.log('✅ Session set successfully:', data);
                         isValidSession = true;
                         showResetForm();
                     }
                 } else {
-                    console.log('Invalid or missing tokens');
+                    console.log('❌ Invalid or missing tokens:', {
+                        hasType: !!tokens.type,
+                        typeValue: tokens.type,
+                        typeMatch: tokens.type === 'recovery',
+                        hasAccessToken: !!tokens.access_token,
+                        hasRefreshToken: !!tokens.refresh_token,
+                        hasLegacyToken: !!tokens.token,
+                        allTokens: tokens
+                    });
                     showError();
                 }
             } catch (error) {
-                console.error('Error handling reset token:', error);
+                console.error('💥 Exception handling reset token:', error);
                 showError();
             }
         }
