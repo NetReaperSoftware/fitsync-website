@@ -291,6 +291,7 @@ footer {
 .about-content {
     padding: 80px 0;
     background: white;
+    color: #333;
 }
 
 .about-section {
@@ -389,10 +390,11 @@ footer {
     border-radius: 10px;
     border-left: 4px solid #667eea;
     text-align: left;
+    color: #333;
 }
 
 .tech-item strong {
-    color: #333;
+    color: #667eea;
 }
 
 .cta-section {
