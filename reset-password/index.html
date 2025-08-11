@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password - FitSync</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">FitSync</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero reset-hero">
+            <div class="container">
+                <div class="reset-container">
+                    
+                    <!-- Loading State -->
+                    <div id="loading" class="reset-card">
+                        <div class="status-icon">⏳</div>
+                        <h1>Validating Reset Link</h1>
+                        <p>Please wait while we verify your password reset request...</p>
+                    </div>
+                    
+                    <!-- Password Reset Form -->
+                    <div id="reset-form" class="reset-card hidden">
+                        <div class="status-icon">🔒</div>
+                        <h1>Reset Your Password</h1>
+                        <p>Enter your new password below to secure your FitSync account.</p>
+                        
+                        <form id="passwordForm" class="password-form">
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input 
+                                    type="password" 
+                                    id="newPassword" 
+                                    name="newPassword"
+                                    class="form-input" 
+                                    placeholder="Enter new password"
+                                    minlength="6"
+                                    required
+                                />
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <input 
+                                    type="password" 
+                                    id="confirmPassword" 
+                                    name="confirmPassword"
+                                    class="form-input" 
+                                    placeholder="Confirm new password"
+                                    minlength="6"
+                                    required
+                                />
+                            </div>
+                            
+                            <button type="submit" id="resetButton" class="cta-button primary full-width">
+                                Reset Password
+                            </button>
+                        </form>
+                        
+                        <div id="message" class="message"></div>
+                        
+                        <div class="form-footer">
+                            <a href="fitsync://auth/login" class="deep-link-button">
+                                Return to FitSync App
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Error State -->
+                    <div id="error-state" class="reset-card hidden">
+                        <div class="status-icon error">❌</div>
+                        <h1>Invalid Reset Link</h1>
+                        <p class="error-text">This password reset link is invalid or has expired. Please request a new password reset from the FitSync app.</p>
+                        <div class="form-footer">
+                            <a href="fitsync://auth/login" class="deep-link-button">
+                                Open FitSync App
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Success State -->
+                    <div id="success-state" class="reset-card hidden">
+                        <div class="status-icon success">✅</div>
+                        <h1>Password Reset Successfully!</h1>
+                        <p class="success-text">Your password has been updated. You can now log in to FitSync with your new password.</p>
+                        <p class="redirect-text">Redirecting to FitSync app...</p>
+                        <div class="form-footer">
+                            <a href="fitsync://auth/password-reset-success" class="cta-button primary">
+                                Continue to FitSync
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reset-info">
+            <div class="container">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <h3>🔐 Secure Process</h3>
+                        <p>Your password reset is handled securely through encrypted connections and validated tokens.</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>📱 Continue in App</h3>
+                        <p>After resetting your password, you'll be redirected back to the FitSync app to continue your fitness journey.</p>
+                    </div>
+                    <div class="info-item">
+                        <h3>🆘 Need Help?</h3>
+                        <p>If you're having trouble resetting your password, contact our support team for assistance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="download-section">
+                <h3>Don't Have FitSync Yet?</h3>
+                <div class="app-store-buttons">
+                    <a href="#" class="store-button ios">📱 Download for iOS</a>
+                    <a href="#" class="store-button android">🤖 Get it on Android</a>
+                </div>
+            </div>
+            <p>&copy; 2024 FitSync. All rights reserved. The complete fitness ecosystem for serious athletes.</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Initialize Supabase client
+        // Note: Supabase anon keys are safe to expose publicly - security is handled by RLS policies
+        const supabase = window.supabase.createClient(
+            'https://rdwcftfxnfcatmjapfjn.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkd2NmdGZ4bmZjYXRtamFwZmpuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgxNDYwMTIsImV4cCI6MjA2MzcyMjAxMn0.R2dQtfnmJ6xzXPFYY815fg8wvZZtjSlSkOeXBYtJ8kA'
+        );
+        
+        let isValidSession = false;
+        
+        // Show different UI states
+        function showLoading() {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('reset-form').classList.add('hidden');
+            document.getElementById('error-state').classList.add('hidden');
+            document.getElementById('success-state').classList.add('hidden');
+        }
+        
+        function showResetForm() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('reset-form').classList.remove('hidden');
+            document.getElementById('error-state').classList.add('hidden');
+            document.getElementById('success-state').classList.add('hidden');
+            
+            // Focus on first input
+            setTimeout(() => {
+                document.getElementById('newPassword').focus();
+            }, 100);
+        }
+        
+        function showError() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('reset-form').classList.add('hidden');
+            document.getElementById('error-state').classList.remove('hidden');
+            document.getElementById('success-state').classList.add('hidden');
+        }
+        
+        function showSuccess() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('reset-form').classList.add('hidden');
+            document.getElementById('error-state').classList.add('hidden');
+            document.getElementById('success-state').classList.remove('hidden');
+        }
+        
+        // Handle password reset tokens
+        async function handleResetToken() {
+            try {
+                const hashParams = new URLSearchParams(window.location.hash.substring(1));
+                const accessToken = hashParams.get('access_token');
+                const refreshToken = hashParams.get('refresh_token');
+                const type = hashParams.get('type');
+                
+                console.log('Token validation:', { type, hasAccessToken: !!accessToken, hasRefreshToken: !!refreshToken });
+                
+                if (type === 'recovery' && accessToken && refreshToken) {
+                    const { error } = await supabase.auth.setSession({
+                        access_token: accessToken,
+                        refresh_token: refreshToken
+                    });
+                    
+                    if (error) {
+                        console.error('Session error:', error);
+                        showError();
+                    } else {
+                        isValidSession = true;
+                        showResetForm();
+                    }
+                } else {
+                    console.log('Invalid or missing tokens');
+                    showError();
+                }
+            } catch (error) {
+                console.error('Error handling reset token:', error);
+                showError();
+            }
+        }
+        
+        // Show message helper
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+        }
+        
+        // Password validation
+        function validatePasswords() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!newPassword || !confirmPassword) {
+                showMessage('Please fill in both password fields.', 'error');
+                return false;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showMessage('Passwords do not match.', 'error');
+                return false;
+            }
+            
+            if (newPassword.length < 6) {
+                showMessage('Password must be at least 6 characters long.', 'error');
+                return false;
+            }
+            
+            // Clear any previous error messages
+            showMessage('', '');
+            return true;
+        }
+        
+        // Handle form submission
+        document.getElementById('passwordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!isValidSession) {
+                showMessage('Invalid session. Please use the link from your email.', 'error');
+                return;
+            }
+            
+            if (!validatePasswords()) {
+                return;
+            }
+            
+            const newPassword = document.getElementById('newPassword').value;
+            const button = document.getElementById('resetButton');
+            const originalText = button.textContent;
+            
+            // Show loading state
+            button.disabled = true;
+            button.textContent = 'Updating Password...';
+            showMessage('', '');
+            
+            try {
+                const { error } = await supabase.auth.updateUser({
+                    password: newPassword
+                });
+                
+                if (error) {
+                    console.error('Password update error:', error);
+                    showMessage(error.message || 'Failed to update password. Please try again.', 'error');
+                    button.disabled = false;
+                    button.textContent = originalText;
+                } else {
+                    showSuccess();
+                    // Redirect to app after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'fitsync://auth/password-reset-success';
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error('Password reset error:', error);
+                showMessage('An unexpected error occurred. Please try again.', 'error');
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        });
+        
+        // Real-time password validation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && newPassword !== confirmPassword) {
+                showMessage('Passwords do not match', 'warning');
+            } else if (confirmPassword && newPassword === confirmPassword) {
+                showMessage('Passwords match', 'success');
+            }
+        });
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showLoading();
+            
+            // Add small delay to show loading state
+            setTimeout(() => {
+                handleResetToken();
+            }, 500);
+        });
+        
+        // Handle hash changes (for single-page navigation)
+        window.addEventListener('hashchange', handleResetToken);
+    </script>
+</body>
+</html>

@@ -1006,3 +1006,255 @@ footer {
         padding: 2rem;
     }
 }
+
+/* Password Reset Page Styles */
+.reset-hero {
+    min-height: 80vh;
+    padding-top: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reset-container {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.reset-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.status-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.status-icon.success {
+    color: #28a745;
+}
+
+.status-icon.error {
+    color: #dc3545;
+}
+
+.reset-card h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+    font-weight: 700;
+}
+
+.reset-card p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.error-text {
+    color: #dc3545 !important;
+}
+
+.success-text {
+    color: #28a745 !important;
+}
+
+.redirect-text {
+    font-size: 1rem !important;
+    color: #888 !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Password Form Styles */
+.password-form {
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-input:invalid {
+    border-color: #dc3545;
+}
+
+.full-width {
+    width: 100%;
+    justify-content: center;
+}
+
+.form-footer {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e1e5e9;
+}
+
+.deep-link-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.deep-link-button:hover {
+    background: rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
+    color: #5a6fd8;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+/* Message Styles */
+.message {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.message.error {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.message.success {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+.message.warning {
+    background: rgba(255, 193, 7, 0.1);
+    color: #856404;
+    border: 1px solid rgba(255, 193, 7, 0.2);
+}
+
+.message:empty {
+    display: none;
+}
+
+/* Reset Info Section */
+.reset-info {
+    padding: 80px 0;
+    background: white;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.info-item {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 1px solid #e9ecef;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.info-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.info-item p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Button Loading States */
+.cta-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.cta-button:disabled:hover {
+    transform: none !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Hidden State */
+.hidden {
+    display: none !important;
+}
+
+/* Reset page responsive design */
+@media (max-width: 768px) {
+    .reset-hero {
+        padding-top: 100px;
+        min-height: 70vh;
+    }
+    
+    .reset-card {
+        padding: 2rem;
+        margin: 0 1rem;
+    }
+    
+    .reset-card h1 {
+        font-size: 2rem;
+    }
+    
+    .status-icon {
+        font-size: 3rem;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-item {
+        padding: 1.5rem;
+    }
+}
