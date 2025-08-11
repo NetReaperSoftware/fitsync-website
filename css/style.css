@@ -683,3 +683,326 @@ footer {
         flex-direction: column;
     }
 }
+
+/* Email Confirmation Page Styles */
+.confirm-hero {
+    min-height: 70vh;
+    padding-top: 120px;
+    text-align: center;
+}
+
+.confirm-hero .hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.success-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.confirm-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.confirm-hero p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+}
+
+.confirmation-content {
+    padding: 80px 0;
+    background: white;
+    color: #333;
+}
+
+.next-steps {
+    margin-bottom: 4rem;
+}
+
+.next-steps h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.step-card {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid #e9ecef;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 50%;
+    line-height: 40px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.step-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.step-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* App Download Section */
+.app-download-section {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 3rem;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 20px;
+}
+
+.app-download-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.app-download-section p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.download-buttons {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.download-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 200px;
+}
+
+.download-button.ios {
+    background: linear-gradient(45deg, #007AFF, #005BCC);
+}
+
+.download-button.android {
+    background: linear-gradient(45deg, #34A853, #0F9D58);
+}
+
+.download-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    color: white;
+    text-decoration: none;
+}
+
+.button-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.store-icon {
+    font-size: 2rem;
+}
+
+.button-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.small-text {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+.large-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Deep Link Section */
+.deep-link-section {
+    padding: 2rem;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 12px;
+    margin-top: 2rem;
+}
+
+.deep-link-text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.deep-link-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.deep-link-button:hover {
+    background: #5a6fd8;
+    color: white;
+    text-decoration: none;
+}
+
+/* Features Preview */
+.features-preview {
+    margin-bottom: 4rem;
+}
+
+.features-preview h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #333;
+}
+
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.preview-item {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    transition: transform 0.3s ease;
+}
+
+.preview-item:hover {
+    transform: translateY(-3px);
+}
+
+.preview-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.preview-item h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.preview-item p {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Success Actions */
+.success-actions {
+    text-align: center;
+    padding: 3rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 20px;
+    color: white;
+}
+
+.success-actions h2 {
+    color: white;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.success-actions p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Confirmation page responsive design */
+@media (max-width: 768px) {
+    .confirm-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .success-icon {
+        font-size: 3rem;
+    }
+    
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .download-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .preview-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .app-download-section {
+        padding: 2rem;
+    }
+    
+    .success-actions {
+        padding: 2rem;
+    }
+}
