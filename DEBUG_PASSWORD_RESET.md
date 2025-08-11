@@ -13,9 +13,14 @@
 
 1. Go to your [Supabase Dashboard](https://supabase.com/dashboard)
 2. Navigate to **Authentication** → **Settings**
-3. Scroll down to **SMTP Settings** and check:
-   - ✅ **Site URL** should be `https://netreapersoftware.github.io/fitsync-website/`
-   - ✅ **Redirect URLs** should include `https://netreapersoftware.github.io/fitsync-website/**`
+3. Scroll down to **URL Configuration** and check:
+   - ✅ **Site URL** should be `https://fitsync.app`
+   - ✅ **Redirect URLs** should include:
+     ```
+     https://fitsync.app/**
+     https://fitsync.app/reset-password/**
+     https://fitsync.app/confirm-email/**
+     ```
 
 ### 2.2 Check Email Templates
 
