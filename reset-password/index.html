@@ -25,8 +25,8 @@
             <div class="container">
                 <div class="reset-container">
                     
-                    <!-- Debug Information (temporarily visible) -->
-                    <div id="debug-panel" class="reset-card" style="background: #f8f9fa; border: 2px solid #007bff; margin-bottom: 20px;">
+                    <!-- Debug Information (hidden in production) -->
+                    <div id="debug-panel" class="reset-card" style="background: #f8f9fa; border: 2px solid #007bff; margin-bottom: 20px; display: none;">
                         <div class="status-icon">🔍</div>
                         <h2>Debug Information</h2>
                         <div id="debug-content" style="font-family: monospace; font-size: 12px; text-align: left; max-height: 200px; overflow-y: auto; background: white; padding: 10px; border-radius: 4px;">
@@ -164,11 +164,16 @@
         // IMMEDIATE TOKEN CAPTURE - Do this first before anything else can clear the URL
         (function captureTokensImmediately() {
             const currentUrl = window.location.href;
-            console.log('🚀 IMMEDIATE CAPTURE - Full URL:', currentUrl);
+            // Only log in development
+            if (window.location.hostname === 'localhost') {
+                console.log('🚀 IMMEDIATE CAPTURE - Full URL:', currentUrl);
+            }
             
             if (currentUrl.includes('#')) {
                 const hashPart = window.location.hash.substring(1);
-                console.log('🚀 IMMEDIATE CAPTURE - Hash part:', hashPart);
+                if (window.location.hostname === 'localhost') {
+                    console.log('🚀 IMMEDIATE CAPTURE - Hash part:', hashPart);
+                }
                 
                 if (hashPart && hashPart.includes('access_token')) {
                     const hashParams = new URLSearchParams(hashPart);
@@ -181,21 +186,26 @@
                         error_description: hashParams.get('error_description'),
                         captured_at: new Date().toISOString()
                     };
-                    console.log('✅ IMMEDIATE CAPTURE - Tokens stored:', {
-                        hasAccessToken: !!capturedTokens.access_token,
-                        type: capturedTokens.type,
-                        accessTokenLength: capturedTokens.access_token?.length
-                    });
+                    if (window.location.hostname === 'localhost') {
+                        console.log('✅ IMMEDIATE CAPTURE - Tokens stored:', {
+                            hasAccessToken: !!capturedTokens.access_token,
+                            type: capturedTokens.type,
+                            accessTokenLength: capturedTokens.access_token?.length
+                        });
+                    }
                 }
             }
         })();
         
-        // Debug logging function
+        // Debug logging function (disabled in production)
         function debugLog(message) {
-            console.log(message);
-            const debugContent = document.getElementById('debug-content');
-            if (debugContent) {
-                debugContent.innerHTML += message + '<br>';
+            // Only log to console in development (when debug panel is visible or localhost)
+            if (window.location.hostname === 'localhost' || document.getElementById('debug-panel')?.style.display !== 'none') {
+                console.log(message);
+                const debugContent = document.getElementById('debug-content');
+                if (debugContent) {
+                    debugContent.innerHTML += message + '<br>';
+                }
             }
         }
         
