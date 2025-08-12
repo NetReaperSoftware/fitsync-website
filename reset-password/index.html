@@ -25,6 +25,15 @@
             <div class="container">
                 <div class="reset-container">
                     
+                    <!-- Debug Information (temporarily visible) -->
+                    <div id="debug-panel" class="reset-card" style="background: #f8f9fa; border: 2px solid #007bff; margin-bottom: 20px;">
+                        <div class="status-icon">🔍</div>
+                        <h2>Debug Information</h2>
+                        <div id="debug-content" style="font-family: monospace; font-size: 12px; text-align: left; max-height: 200px; overflow-y: auto; background: white; padding: 10px; border-radius: 4px;">
+                            <strong>URL Analysis:</strong><br>
+                        </div>
+                    </div>
+
                     <!-- Loading State -->
                     <div id="loading" class="reset-card">
                         <div class="status-icon">⏳</div>
@@ -151,6 +160,15 @@
         
         let isValidSession = false;
         
+        // Debug logging function
+        function debugLog(message) {
+            console.log(message);
+            const debugContent = document.getElementById('debug-content');
+            if (debugContent) {
+                debugContent.innerHTML += message + '<br>';
+            }
+        }
+        
         // Show different UI states
         function showLoading() {
             document.getElementById('loading').classList.remove('hidden');
@@ -185,18 +203,19 @@
             document.getElementById('success-state').classList.remove('hidden');
         }
         
-        // Enhanced token extraction function
+        // Simplified token extraction - handles Supabase redirect format
         function extractTokensFromUrl() {
-            console.log('🔍 Full URL:', window.location.href);
-            console.log('🔍 Hash:', window.location.hash);
-            console.log('🔍 Search:', window.location.search);
-            
             const url = new URL(window.location.href);
+            
+            debugLog('🔍 Full URL: ' + window.location.href);
+            debugLog('🔍 Hash: ' + window.location.hash);
+            debugLog('🔍 Search: ' + window.location.search);
+            
             let tokens = {};
             
-            // Method 1: Hash fragments (most common)
+            // Method 1: Hash fragments (after Supabase redirect)
             if (url.hash) {
-                console.log('📍 Parsing from hash fragments');
+                debugLog('📍 Parsing from hash fragments');
                 const hashParams = new URLSearchParams(url.hash.substring(1));
                 tokens = {
                     access_token: hashParams.get('access_token'),
@@ -208,112 +227,86 @@
                 };
             }
             
-            // Method 2: Query parameters
+            // Method 2: Query parameters (backup)
             else if (url.search) {
-                console.log('📍 Parsing from query parameters');
+                debugLog('📍 Parsing from query parameters');
+                const searchParams = url.searchParams;
                 tokens = {
-                    access_token: url.searchParams.get('access_token'),
-                    refresh_token: url.searchParams.get('refresh_token'),
-                    type: url.searchParams.get('type'),
-                    error: url.searchParams.get('error'),
-                    error_description: url.searchParams.get('error_description'),
-                    token: url.searchParams.get('token'), // Legacy format
-                    expires_at: url.searchParams.get('expires_at')
+                    access_token: searchParams.get('access_token'),
+                    refresh_token: searchParams.get('refresh_token'),
+                    type: searchParams.get('type'),
+                    error: searchParams.get('error'),
+                    error_description: searchParams.get('error_description'),
+                    expires_at: searchParams.get('expires_at')
                 };
             }
             
-            // Method 3: Handle legacy token-only format
-            if (!tokens.access_token && tokens.token) {
-                console.log('📍 Using legacy token format');
-                tokens.access_token = tokens.token;
-                tokens.type = 'recovery';
-            }
+            debugLog('🔍 Extracted tokens: ' + JSON.stringify({
+                hasAccessToken: !!tokens.access_token,
+                hasRefreshToken: !!tokens.refresh_token,
+                type: tokens.type,
+                error: tokens.error,
+                accessTokenLength: tokens.access_token?.length,
+                refreshTokenLength: tokens.refresh_token?.length
+            }));
             
             return tokens;
         }
 
-        // Handle password reset tokens
+        // Handle password reset tokens  
         async function handleResetToken() {
             try {
                 const tokens = extractTokensFromUrl();
                 
-                console.log('🔍 Extracted tokens:', { 
-                    type: tokens.type, 
-                    hasAccessToken: !!tokens.access_token, 
-                    hasRefreshToken: !!tokens.refresh_token,
-                    error: tokens.error,
-                    errorDescription: tokens.error_description,
-                    accessTokenLength: tokens.access_token?.length,
-                    refreshTokenLength: tokens.refresh_token?.length,
-                    hasLegacyToken: !!tokens.token,
-                    expiresAt: tokens.expires_at
-                });
-                
-                // Check for error in URL
+                // Check for error in URL first
                 if (tokens.error) {
-                    console.error('❌ URL contains error:', tokens.error, tokens.error_description);
+                    debugLog('❌ URL contains error: ' + tokens.error + ' - ' + tokens.error_description);
                     showError();
                     return;
                 }
                 
-                // Check for required tokens - try multiple formats
-                const hasValidTokens = (
-                    (tokens.type === 'recovery' && tokens.access_token && tokens.refresh_token) || // Standard format
-                    (tokens.access_token && tokens.type === 'recovery') || // Minimal format
-                    (tokens.token && !tokens.type) // Legacy format
-                );
-                
-                if (hasValidTokens) {
-                    console.log('✅ Valid recovery tokens found, setting session...');
+                // Check if we have valid recovery tokens
+                if (tokens.type === 'recovery' && tokens.access_token) {
+                    debugLog('✅ Valid recovery tokens found, setting session...');
                     
                     const sessionData = {
                         access_token: tokens.access_token,
-                        refresh_token: tokens.refresh_token || tokens.access_token // Fallback for legacy
+                        refresh_token: tokens.refresh_token || tokens.access_token // Use access_token as fallback
                     };
                     
+                    debugLog('🔄 Calling supabase.auth.setSession...');
                     const { data, error: sessionError } = await supabase.auth.setSession(sessionData);
                     
                     if (sessionError) {
-                        console.error('❌ Session error:', sessionError);
-                        console.error('Error details:', {
+                        debugLog('❌ Session error: ' + sessionError.message);
+                        debugLog('Error details: ' + JSON.stringify({
                             message: sessionError.message,
                             status: sessionError.status,
                             statusCode: sessionError.statusCode,
                             name: sessionError.name
-                        });
-                        
-                        // Try alternative session methods if main one fails
-                        console.log('🔄 Trying alternative authentication...');
-                        
-                        // For legacy token format, try signInWithOtp
-                        if (tokens.token && !tokens.refresh_token) {
-                            console.log('🔄 Attempting token-based recovery...');
-                            // This might work for some Supabase configurations
-                            isValidSession = true;
-                            showResetForm();
-                            return;
-                        }
-                        
+                        }));
                         showError();
                     } else {
-                        console.log('✅ Session set successfully:', data);
+                        debugLog('✅ Session set successfully!');
+                        debugLog('User: ' + (data.user ? data.user.email : 'No user data'));
                         isValidSession = true;
                         showResetForm();
                     }
                 } else {
-                    console.log('❌ Invalid or missing tokens:', {
-                        hasType: !!tokens.type,
-                        typeValue: tokens.type,
-                        typeMatch: tokens.type === 'recovery',
-                        hasAccessToken: !!tokens.access_token,
-                        hasRefreshToken: !!tokens.refresh_token,
-                        hasLegacyToken: !!tokens.token,
-                        allTokens: tokens
-                    });
+                    debugLog('❌ Invalid or missing tokens. Required: type=recovery and access_token');
+                    debugLog('Current: type=' + tokens.type + ', hasAccessToken=' + !!tokens.access_token);
+                    
+                    // If no tokens at all, this might be the initial page load
+                    if (!tokens.access_token && !tokens.error && !window.location.hash && !window.location.search) {
+                        debugLog('📝 No tokens found - this appears to be direct page access');
+                        debugLog('Expected flow: Email link → Supabase verification → Redirect here with tokens');
+                    }
+                    
                     showError();
                 }
             } catch (error) {
-                console.error('💥 Exception handling reset token:', error);
+                debugLog('💥 Exception in handleResetToken: ' + error.message);
+                console.error('Exception details:', error);
                 showError();
             }
         }
