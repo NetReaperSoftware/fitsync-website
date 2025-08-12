@@ -159,6 +159,36 @@
         );
         
         let isValidSession = false;
+        let capturedTokens = null; // Store tokens immediately to prevent loss
+        
+        // IMMEDIATE TOKEN CAPTURE - Do this first before anything else can clear the URL
+        (function captureTokensImmediately() {
+            const currentUrl = window.location.href;
+            console.log('🚀 IMMEDIATE CAPTURE - Full URL:', currentUrl);
+            
+            if (currentUrl.includes('#')) {
+                const hashPart = window.location.hash.substring(1);
+                console.log('🚀 IMMEDIATE CAPTURE - Hash part:', hashPart);
+                
+                if (hashPart && hashPart.includes('access_token')) {
+                    const hashParams = new URLSearchParams(hashPart);
+                    capturedTokens = {
+                        access_token: hashParams.get('access_token'),
+                        refresh_token: hashParams.get('refresh_token'),
+                        type: hashParams.get('type'),
+                        expires_at: hashParams.get('expires_at'),
+                        error: hashParams.get('error'),
+                        error_description: hashParams.get('error_description'),
+                        captured_at: new Date().toISOString()
+                    };
+                    console.log('✅ IMMEDIATE CAPTURE - Tokens stored:', {
+                        hasAccessToken: !!capturedTokens.access_token,
+                        type: capturedTokens.type,
+                        accessTokenLength: capturedTokens.access_token?.length
+                    });
+                }
+            }
+        })();
         
         // Debug logging function
         function debugLog(message) {
@@ -213,8 +243,18 @@
             
             let tokens = {};
             
+            // Method 0: Use captured tokens if available (highest priority)
+            if (capturedTokens) {
+                debugLog('📍 Using immediately captured tokens');
+                tokens = { ...capturedTokens };
+                debugLog('✅ Captured tokens: ' + JSON.stringify({
+                    hasAccessToken: !!tokens.access_token,
+                    type: tokens.type,
+                    capturedAt: tokens.captured_at
+                }));
+            }
             // Method 1: Hash fragments (after Supabase redirect)
-            if (url.hash) {
+            else if (url.hash) {
                 debugLog('📍 Parsing from hash fragments');
                 const hashParams = new URLSearchParams(url.hash.substring(1));
                 tokens = {
