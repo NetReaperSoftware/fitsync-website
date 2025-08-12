@@ -203,7 +203,7 @@
             document.getElementById('success-state').classList.remove('hidden');
         }
         
-        // Simplified token extraction - handles Supabase redirect format
+        // Enhanced token extraction - handles multiple Supabase formats
         function extractTokensFromUrl() {
             const url = new URL(window.location.href);
             
@@ -227,23 +227,38 @@
                 };
             }
             
-            // Method 2: Query parameters (backup)
-            else if (url.search) {
+            // Method 2: Query parameters (backup or direct token)
+            if (url.search) {
                 debugLog('📍 Parsing from query parameters');
                 const searchParams = url.searchParams;
-                tokens = {
+                const queryTokens = {
                     access_token: searchParams.get('access_token'),
                     refresh_token: searchParams.get('refresh_token'),
                     type: searchParams.get('type'),
                     error: searchParams.get('error'),
                     error_description: searchParams.get('error_description'),
-                    expires_at: searchParams.get('expires_at')
+                    expires_at: searchParams.get('expires_at'),
+                    // Also check for direct Supabase token format
+                    token: searchParams.get('token')
                 };
+                
+                // If we don't have tokens from hash, use query params
+                if (!tokens.access_token) {
+                    tokens = queryTokens;
+                }
+            }
+            
+            // Method 3: Handle direct Supabase token format (bypass redirect)
+            if (!tokens.access_token && tokens.token && tokens.type === 'recovery') {
+                debugLog('📍 Found direct Supabase token - attempting direct verification');
+                tokens.access_token = tokens.token; // Use token as access_token
+                tokens.direct_token = true; // Flag for special handling
             }
             
             debugLog('🔍 Extracted tokens: ' + JSON.stringify({
                 hasAccessToken: !!tokens.access_token,
                 hasRefreshToken: !!tokens.refresh_token,
+                hasDirectToken: !!tokens.direct_token,
                 type: tokens.type,
                 error: tokens.error,
                 accessTokenLength: tokens.access_token?.length,
@@ -285,6 +300,35 @@
                 if (tokens.type === 'recovery' && tokens.access_token) {
                     debugLog('✅ Valid recovery tokens found, setting session...');
                     
+                    // Handle direct token case (bypass Supabase redirect)
+                    if (tokens.direct_token) {
+                        debugLog('🔄 Using direct token method...');
+                        
+                        // For direct tokens, we need to verify via Supabase API
+                        try {
+                            const { data, error: verifyError } = await supabase.auth.verifyOtp({
+                                token_hash: tokens.access_token,
+                                type: 'recovery'
+                            });
+                            
+                            if (verifyError) {
+                                debugLog('❌ Direct token verification error: ' + verifyError.message);
+                                showError();
+                                return;
+                            } else {
+                                debugLog('✅ Direct token verified successfully!');
+                                debugLog('User: ' + (data.user ? data.user.email : 'No user data'));
+                                isValidSession = true;
+                                showResetForm();
+                                return;
+                            }
+                        } catch (directError) {
+                            debugLog('❌ Exception in direct token verification: ' + directError.message);
+                            // Fall through to standard session method
+                        }
+                    }
+                    
+                    // Standard session method
                     const sessionData = {
                         access_token: tokens.access_token,
                         refresh_token: tokens.refresh_token || tokens.access_token // Use access_token as fallback
@@ -418,9 +462,68 @@
             }
         });
         
+        // Check if this is a direct Supabase link that needs special handling
+        function checkForDirectSupabaseLink() {
+            const url = window.location.href;
+            const referrer = document.referrer;
+            
+            debugLog('🔍 Current URL: ' + url);
+            debugLog('🔍 Referrer: ' + referrer);
+            
+            // Check if we came from a Supabase verification (referrer contains supabase.co)
+            if (referrer && referrer.includes('supabase.co')) {
+                debugLog('📍 Came from Supabase verification - checking for token in referrer...');
+                
+                try {
+                    const referrerUrl = new URL(referrer);
+                    const token = referrerUrl.searchParams.get('token');
+                    const type = referrerUrl.searchParams.get('type');
+                    
+                    if (token && type === 'recovery') {
+                        debugLog('✅ Found token in referrer - adding to current URL');
+                        const currentUrl = new URL(window.location.href);
+                        currentUrl.searchParams.set('token', token);
+                        currentUrl.searchParams.set('type', type);
+                        
+                        // Replace current history entry to avoid back button issues
+                        window.history.replaceState({}, '', currentUrl.toString());
+                        debugLog('📍 Updated URL with tokens: ' + currentUrl.toString());
+                        return false; // Continue processing with updated URL
+                    }
+                } catch (error) {
+                    debugLog('❌ Error parsing referrer URL: ' + error.message);
+                }
+            }
+            
+            // If this looks like a Supabase verification URL, extract and redirect
+            if (url.includes('/auth/v1/verify') || url.includes('supabase.co')) {
+                debugLog('🔄 Detected Supabase verification URL - extracting token...');
+                
+                const urlObj = new URL(url);
+                const token = urlObj.searchParams.get('token');
+                const type = urlObj.searchParams.get('type');
+                const redirectTo = urlObj.searchParams.get('redirect_to');
+                
+                if (token && type === 'recovery' && redirectTo) {
+                    debugLog('📍 Redirecting with token parameters...');
+                    const targetUrl = redirectTo + '?token=' + token + '&type=' + type;
+                    window.location.href = targetUrl;
+                    return true; // Indicates we're redirecting
+                }
+            }
+            
+            return false; // No redirect needed
+        }
+        
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             showLoading();
+            
+            // Check for direct Supabase link first
+            if (checkForDirectSupabaseLink()) {
+                debugLog('🔄 Redirecting to handle Supabase verification...');
+                return; // Don't continue if we're redirecting
+            }
             
             // Add small delay to show loading state
             setTimeout(() => {
