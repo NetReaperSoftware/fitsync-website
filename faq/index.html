@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - FitSync</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .faq-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .faq-section {
+            margin-bottom: 40px;
+        }
+        
+        .faq-section h2 {
+            color: #333;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            font-size: 1.8rem;
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-question.active::after {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: white;
+        }
+        
+        .faq-answer.active {
+            padding: 20px;
+            max-height: 500px;
+        }
+        
+        .faq-answer p {
+            margin: 0 0 15px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .faq-answer ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .faq-answer li {
+            margin: 5px 0;
+            color: #555;
+        }
+        
+        .feature-highlight {
+            background: #e8f2ff;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .app-download-cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 60px 0;
+        }
+        
+        .app-download-cta h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.5rem;
+        }
+        
+        .app-download-cta p {
+            margin: 0 0 20px 0;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">FitSync</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/#features">Features</a></li>
+                <li><a href="/faq/" class="active">FAQ</a></li>
+                <li><a href="/contact/">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero faq-hero">
+            <div class="container">
+                <h1>Frequently Asked Questions</h1>
+                <p>Everything you need to know about FitSync's features and functionality</p>
+            </div>
+        </section>
+
+        <div class="faq-container">
+            <!-- Calorie Tracking Section -->
+            <div class="faq-section">
+                <h2>🍎 Calorie & Nutrition Tracking</h2>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">How does FitSync's calorie tracking work?</h3>
+                    <div class="faq-answer">
+                        <p>FitSync uses a comprehensive approach to calorie tracking:</p>
+                        <ul>
+                            <li><strong>Barcode Scanning:</strong> Instantly log packaged foods by scanning barcodes</li>
+                            <li><strong>Extensive Food Database:</strong> Search from thousands of foods and restaurant items</li>
+                            <li><strong>Custom Foods:</strong> Add your own recipes and custom meal entries</li>
+                            <li><strong>Macro Breakdown:</strong> Track proteins, carbs, fats, and micronutrients</li>
+                            <li><strong>Smart Suggestions:</strong> AI-powered meal recommendations based on your goals</li>
+                        </ul>
+                        <div class="feature-highlight">
+                            <strong>Pro Tip:</strong> FitSync automatically calculates your daily calorie needs based on your activity level, goals, and HealthKit data integration.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Can I track macros and not just calories?</h3>
+                    <div class="faq-answer">
+                        <p>Absolutely! FitSync provides detailed macro tracking including:</p>
+                        <ul>
+                            <li>Protein, Carbohydrates, and Fat percentages</li>
+                            <li>Fiber, Sugar, and Sodium monitoring</li>
+                            <li>Custom macro ratio targets (e.g., 40/30/30 split)</li>
+                            <li>Visual progress charts and daily breakdowns</li>
+                            <li>Integration with your fitness goals (bulking, cutting, maintenance)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Does FitSync work offline for food logging?</h3>
+                    <div class="faq-answer">
+                        <p>Yes! FitSync includes robust offline capabilities:</p>
+                        <ul>
+                            <li>Cache your frequently used foods for offline access</li>
+                            <li>Log meals without internet connection</li>
+                            <li>Automatic sync when connection is restored</li>
+                            <li>Optimistic updates ensure smooth user experience</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workout Tracking Section -->
+            <div class="faq-section">
+                <h2>💪 Workout & Strength Tracking</h2>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">How does workout tracking work in FitSync?</h3>
+                    <div class="faq-answer">
+                        <p>FitSync offers comprehensive workout tracking with several key features:</p>
+                        <ul>
+                            <li><strong>Exercise Database:</strong> Over 1000+ exercises with proper form instructions</li>
+                            <li><strong>Muscle Mapping:</strong> Visual representation of which muscles you're targeting</li>
+                            <li><strong>Progress Tracking:</strong> Track sets, reps, weight, and rest periods</li>
+                            <li><strong>Routine Templates:</strong> Create and save custom workout routines</li>
+                            <li><strong>Volume Analytics:</strong> Monitor training volume and progressive overload</li>
+                        </ul>
+                        <div class="feature-highlight">
+                            <strong>Unique Feature:</strong> FitSync's interactive muscle mapping shows exactly which muscle groups you've trained and suggests balanced workout plans.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Can I create custom workout routines?</h3>
+                    <div class="faq-answer">
+                        <p>Yes! FitSync allows you to create fully customized workout routines:</p>
+                        <ul>
+                            <li>Build routines from scratch or use our templates</li>
+                            <li>Set custom rest periods between exercises</li>
+                            <li>Add supersets and circuit training</li>
+                            <li>Schedule routines for specific days</li>
+                            <li>Share routines with friends or trainers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">How does the progressive overload tracking work?</h3>
+                    <div class="faq-answer">
+                        <p>FitSync automatically tracks your strength progression:</p>
+                        <ul>
+                            <li>Monitor weight increases over time</li>
+                            <li>Track total training volume per muscle group</li>
+                            <li>Get suggestions for when to increase weight or reps</li>
+                            <li>Visual charts showing strength gains</li>
+                            <li>Personal record notifications and celebrations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cardio Tracking Section -->
+            <div class="faq-section">
+                <h2>🏃 Cardio & GPS Tracking</h2>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Does FitSync track running and cardio workouts?</h3>
+                    <div class="faq-answer">
+                        <p>Yes! FitSync includes comprehensive cardio tracking:</p>
+                        <ul>
+                            <li><strong>GPS Route Tracking:</strong> Real-time location tracking for outdoor activities</li>
+                            <li><strong>Live Metrics:</strong> Pace, distance, calories burned, and duration</li>
+                            <li><strong>Background Tracking:</strong> Continues tracking even when app is closed</li>
+                            <li><strong>Route Visualization:</strong> View your routes on detailed maps</li>
+                            <li><strong>HealthKit Integration:</strong> Syncs with Apple Health automatically</li>
+                        </ul>
+                        <div class="feature-highlight">
+                            <strong>Advanced Feature:</strong> FitSync uses professional-grade GPS filtering for accurate distance measurement, matching the precision of dedicated running apps.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Can I track indoor cardio workouts?</h3>
+                    <div class="faq-answer">
+                        <p>Absolutely! FitSync supports various indoor cardio activities:</p>
+                        <ul>
+                            <li>Treadmill, elliptical, and stationary bike workouts</li>
+                            <li>Manual time and calorie entry</li>
+                            <li>Heart rate monitoring (with compatible devices)</li>
+                            <li>HIIT and interval training templates</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HealthKit Integration Section -->
+            <div class="faq-section">
+                <h2>🔗 HealthKit & Data Integration</h2>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">How does FitSync integrate with Apple HealthKit?</h3>
+                    <div class="faq-answer">
+                        <p>FitSync provides seamless HealthKit integration:</p>
+                        <ul>
+                            <li><strong>Automatic Syncing:</strong> Weight, steps, and activity data sync automatically</li>
+                            <li><strong>Background Updates:</strong> Data updates even when app is closed</li>
+                            <li><strong>Two-Way Sync:</strong> Reads from and writes to HealthKit</li>
+                            <li><strong>Comprehensive Metrics:</strong> Calories, workouts, body measurements, and more</li>
+                            <li><strong>Privacy First:</strong> You control exactly which data to share</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Does FitSync work with fitness wearables?</h3>
+                    <div class="faq-answer">
+                        <p>Yes, through HealthKit integration, FitSync works with:</p>
+                        <ul>
+                            <li>Apple Watch (native integration)</li>
+                            <li>Any device that syncs with Apple Health</li>
+                            <li>Heart rate monitors and fitness trackers</li>
+                            <li>Smart scales for automatic weight tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical & General Section -->
+            <div class="faq-section">
+                <h2>⚙️ Technical & General</h2>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Is my data secure and private in FitSync?</h3>
+                    <div class="faq-answer">
+                        <p>Absolutely. FitSync takes data security seriously:</p>
+                        <ul>
+                            <li><strong>Encrypted Storage:</strong> All data is encrypted both in transit and at rest</li>
+                            <li><strong>Privacy by Design:</strong> Minimal data collection, only what's necessary</li>
+                            <li><strong>No Data Selling:</strong> We never sell or share your personal information</li>
+                            <li><strong>User Control:</strong> Delete your data anytime</li>
+                            <li><strong>GDPR Compliant:</strong> Meets international privacy standards</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Does FitSync work offline?</h3>
+                    <div class="faq-answer">
+                        <p>Yes! FitSync includes robust offline functionality:</p>
+                        <ul>
+                            <li>Log workouts and meals without internet</li>
+                            <li>Access previously cached food database</li>
+                            <li>GPS tracking works completely offline</li>
+                            <li>Data syncs automatically when connection returns</li>
+                            <li>Optimistic updates for smooth user experience</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Is FitSync free to use?</h3>
+                    <div class="faq-answer">
+                        <p>FitSync offers both free and premium features:</p>
+                        <ul>
+                            <li><strong>Free Features:</strong> Basic workout and food tracking, HealthKit sync</li>
+                            <li><strong>Premium Features:</strong> Advanced analytics, unlimited custom routines, detailed reports</li>
+                            <li><strong>No Ads:</strong> Clean, distraction-free experience</li>
+                            <li><strong>Fair Pricing:</strong> Affordable subscription with real value</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-question">Can I export my data from FitSync?</h3>
+                    <div class="faq-answer">
+                        <p>Yes! FitSync supports data portability:</p>
+                        <ul>
+                            <li>Export workout history as CSV/JSON</li>
+                            <li>Download food logs and nutrition data</li>
+                            <li>Access raw GPS/route data</li>
+                            <li>Full data backup capabilities</li>
+                            <li>Easy migration to other apps if needed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app-download-cta">
+                <h3>Ready to Start Your Fitness Journey?</h3>
+                <p>Download FitSync today and experience the complete fitness ecosystem</p>
+                <div class="app-store-buttons">
+                    <a href="#" class="store-button ios">📱 Download for iOS</a>
+                    <a href="#" class="store-button android">🤖 Get it on Android</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="download-section">
+                <h3>Questions Not Answered?</h3>
+                <p><a href="/contact/" style="color: #667eea;">Contact our support team</a> - we're here to help!</p>
+            </div>
+            <p>&copy; 2024 FitSync. All rights reserved. The complete fitness ecosystem for serious athletes.</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // FAQ Accordion Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+                    
+                    // Close all other FAQ items
+                    faqQuestions.forEach(q => {
+                        q.classList.remove('active');
+                        q.nextElementSibling.classList.remove('active');
+                    });
+                    
+                    // Toggle current item
+                    if (!isActive) {
+                        this.classList.add('active');
+                        answer.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
