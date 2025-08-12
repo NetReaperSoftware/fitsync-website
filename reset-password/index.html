@@ -91,8 +91,8 @@
                     <!-- Error State -->
                     <div id="error-state" class="reset-card hidden">
                         <div class="status-icon error">❌</div>
-                        <h1>Invalid Reset Link</h1>
-                        <p class="error-text">This password reset link is invalid or has expired. Please request a new password reset from the FitSync app.</p>
+                        <h1 id="error-title">Invalid Reset Link</h1>
+                        <p id="error-message" class="error-text">This password reset link is invalid or has expired. Please request a new password reset from the FitSync app.</p>
                         <div class="form-footer">
                             <a href="fitsync://auth/login" class="deep-link-button">
                                 Open FitSync App
@@ -261,6 +261,22 @@
                 // Check for error in URL first
                 if (tokens.error) {
                     debugLog('❌ URL contains error: ' + tokens.error + ' - ' + tokens.error_description);
+                    
+                    // Customize error message based on error type
+                    const errorTitle = document.getElementById('error-title');
+                    const errorMessage = document.getElementById('error-message');
+                    
+                    if (tokens.error === 'access_denied' && tokens.error_description?.includes('expired')) {
+                        errorTitle.textContent = 'Reset Link Expired';
+                        errorMessage.textContent = 'This password reset link has expired. Password reset links are only valid for 1 hour. Please request a new password reset from the FitSync app.';
+                    } else if (tokens.error === 'access_denied') {
+                        errorTitle.textContent = 'Access Denied';
+                        errorMessage.textContent = 'This password reset link has been denied access. Please request a new password reset from the FitSync app.';
+                    } else {
+                        errorTitle.textContent = 'Reset Link Error';
+                        errorMessage.textContent = 'There was an error with this password reset link: ' + (tokens.error_description || tokens.error) + '. Please request a new password reset from the FitSync app.';
+                    }
+                    
                     showError();
                     return;
                 }
