@@ -9,80 +9,128 @@
         .faq-hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 80px 0;
+            padding: 120px 0 60px 0;
             text-align: center;
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .faq-hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .faq-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+            line-height: 1.6;
         }
         
         .faq-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 30px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .faq-section {
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
         
         .faq-section h2 {
-            color: #333;
-            margin-bottom: 30px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #667eea;
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 35px;
+            padding: 20px 30px;
+            border-radius: 12px;
             font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
         
         .faq-item {
-            margin-bottom: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
             overflow: hidden;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .faq-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         .faq-question {
-            background: #f8f9fa;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
             margin: 0;
             cursor: pointer;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.95) !important;
         }
         
         .faq-question:hover {
-            background: #e9ecef;
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
         }
         
         .faq-question::after {
-            content: '+';
-            font-size: 1.5rem;
-            font-weight: 300;
+            content: '▼';
+            font-size: 1.2rem;
             transition: transform 0.3s ease;
+            color: #667eea;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
+
         .faq-question.active::after {
-            transform: rotate(45deg);
+            transform: rotate(180deg);
         }
         
         .faq-answer {
-            padding: 0 20px;
+            padding: 0 25px;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            background: white;
+            opacity: 0;
+            transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
         }
         
         .faq-answer.active {
-            padding: 20px;
-            max-height: 500px;
+            padding: 25px;
+            max-height: 600px;
+            opacity: 1;
         }
         
         .faq-answer p {
             margin: 0 0 15px 0;
-            line-height: 1.6;
-            color: #555;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
         }
         
         .faq-answer ul {
@@ -91,35 +139,110 @@
         }
         
         .faq-answer li {
-            margin: 5px 0;
-            color: #555;
+            margin: 8px 0;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .faq-answer strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .faq-question h3 {
+            color: rgba(255, 255, 255, 0.95) !important;
+            margin: 0;
+            font-size: inherit;
+            font-weight: inherit;
         }
         
         .feature-highlight {
-            background: #e8f2ff;
-            padding: 15px;
+            background: rgba(102, 126, 234, 0.15);
+            padding: 20px;
             border-left: 4px solid #667eea;
-            margin: 15px 0;
-            border-radius: 0 4px 4px 0;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            color: rgba(255, 255, 255, 0.95);
         }
         
         .app-download-cta {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px;
-            border-radius: 12px;
+            padding: 50px 40px;
+            border-radius: 16px;
             text-align: center;
             margin: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-download-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 200"><path d="M0,100 C150,50 350,150 500,100 C650,50 850,150 1000,100 L1000,200 L0,200 Z" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat bottom center;
+            pointer-events: none;
         }
         
         .app-download-cta h3 {
             margin: 0 0 15px 0;
-            font-size: 1.5rem;
+            font-size: 2rem;
+            font-weight: 700;
         }
         
         .app-download-cta p {
-            margin: 0 0 20px 0;
-            opacity: 0.9;
+            margin: 0 0 30px 0;
+            opacity: 0.95;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .store-button {
+            display: inline-flex;
+            align-items: center;
+            margin: 10px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            min-width: 180px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .store-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            color: white;
+        }
+
+        .store-button.ios {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .store-button.android {
+            background: rgba(61, 220, 132, 0.9);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .store-icon {
+            font-size: 1.5rem;
+            margin-right: 8px;
         }
     </style>
 </head>
@@ -272,8 +395,7 @@
                         <p>Absolutely! FitSync supports various indoor cardio activities:</p>
                         <ul>
                             <li>Treadmill, elliptical, and stationary bike workouts</li>
-                            <li>Manual time and calorie entry</li>
-                            <li>Heart rate monitoring (with compatible devices)</li>
+                            <li>Manual time and calorie entry (Coming Soon!)</li>
                             <li>HIIT and interval training templates</li>
                         </ul>
                     </div>
@@ -374,10 +496,16 @@
 
             <div class="app-download-cta">
                 <h3>Ready to Start Your Fitness Journey?</h3>
-                <p>Download FitSync today and experience the complete fitness ecosystem</p>
-                <div class="app-store-buttons">
-                    <a href="#" class="store-button ios">📱 Download for iOS</a>
-                    <a href="#" class="store-button android">🤖 Get it on Android</a>
+                <p>Download FitSync today and experience the revolutionary all-in-one fitness platform</p>
+                <div class="store-buttons">
+                    <a href="#" class="store-button ios">
+                        <span class="store-icon">📱</span>
+                        Download for iOS
+                    </a>
+                    <a href="#" class="store-button android">
+                        <span class="store-icon">🤖</span>
+                        Get it on Android
+                    </a>
                 </div>
             </div>
         </div>
