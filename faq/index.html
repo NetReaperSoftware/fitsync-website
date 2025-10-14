@@ -244,6 +244,108 @@
             font-size: 1.5rem;
             margin-right: 8px;
         }
+
+        /* Search and Filter Styles */
+        .faq-search-section {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+
+        #faq-search {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #faq-search:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        #faq-search::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .results-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        #results-count {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .faq-item.hidden {
+            display: none;
+        }
+
+        .faq-section.hidden {
+            display: none;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+        }
+
+        .no-results h3 {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -269,11 +371,35 @@
         </section>
 
         <div class="faq-container">
-            <!-- Calorie Tracking Section -->
+            <!-- Search and Filter Section -->
+            <div class="faq-search-section">
+                <div class="search-container">
+                    <input type="text" id="faq-search" placeholder="Search for questions..." />
+                    <span class="search-icon">🔍</span>
+                </div>
+
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all">All</button>
+                    <button class="category-btn" data-category="nutrition">Nutrition</button>
+                    <button class="category-btn" data-category="workouts">Workouts</button>
+                    <button class="category-btn" data-category="cardio">Cardio</button>
+                    <button class="category-btn" data-category="healthkit">HealthKit</button>
+                    <button class="category-btn" data-category="security">Security</button>
+                    <button class="category-btn" data-category="general">General</button>
+                </div>
+            </div>
+
+            <!-- FAQ Results -->
+            <div class="faq-results">
+                <div class="results-header">
+                    <span id="results-count">12 questions found</span>
+                </div>
+
+                <!-- Calorie Tracking Section -->
             <div class="faq-section">
                 <h2>🍎 Calorie & Nutrition Tracking</h2>
                 
-                <div class="faq-item">
+                <div class="faq-item" data-category="nutrition" data-keywords="calorie tracking barcode scanning food database nutrition">
                     <h3 class="faq-question">How does FitSync's calorie tracking work?</h3>
                     <div class="faq-answer">
                         <p>FitSync uses a comprehensive approach to calorie tracking:</p>
@@ -290,7 +416,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="nutrition">
                     <h3 class="faq-question">Can I track macros and not just calories?</h3>
                     <div class="faq-answer">
                         <p>Absolutely! FitSync provides detailed macro tracking including:</p>
@@ -304,7 +430,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="nutrition">
                     <h3 class="faq-question">Does FitSync work offline for food logging?</h3>
                     <div class="faq-answer">
                         <p>Yes! FitSync includes robust offline capabilities:</p>
@@ -322,7 +448,7 @@
             <div class="faq-section">
                 <h2>💪 Workout & Strength Tracking</h2>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="workouts">
                     <h3 class="faq-question">How does workout tracking work in FitSync?</h3>
                     <div class="faq-answer">
                         <p>FitSync offers comprehensive workout tracking with several key features:</p>
@@ -339,7 +465,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="workouts">
                     <h3 class="faq-question">Can I create custom workout routines?</h3>
                     <div class="faq-answer">
                         <p>Yes! FitSync allows you to create fully customized workout routines:</p>
@@ -353,7 +479,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="workouts">
                     <h3 class="faq-question">How does the progressive overload tracking work?</h3>
                     <div class="faq-answer">
                         <p>FitSync automatically tracks your strength progression:</p>
@@ -372,7 +498,7 @@
             <div class="faq-section">
                 <h2>🏃 Cardio & GPS Tracking</h2>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="cardio">
                     <h3 class="faq-question">Does FitSync track running and cardio workouts?</h3>
                     <div class="faq-answer">
                         <p>Yes! FitSync includes comprehensive cardio tracking:</p>
@@ -389,7 +515,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="cardio">
                     <h3 class="faq-question">Can I track indoor cardio workouts?</h3>
                     <div class="faq-answer">
                         <p>Absolutely! FitSync supports various indoor cardio activities:</p>
@@ -406,7 +532,7 @@
             <div class="faq-section">
                 <h2>🔗 HealthKit & Data Integration</h2>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="healthkit">
                     <h3 class="faq-question">How does FitSync integrate with Apple HealthKit?</h3>
                     <div class="faq-answer">
                         <p>FitSync provides seamless HealthKit integration:</p>
@@ -420,7 +546,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="healthkit">
                     <h3 class="faq-question">Does FitSync work with fitness wearables?</h3>
                     <div class="faq-answer">
                         <p>Yes, through HealthKit integration, FitSync works with:</p>
@@ -438,7 +564,7 @@
             <div class="faq-section">
                 <h2>⚙️ Technical & General</h2>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="security">
                     <h3 class="faq-question">Is my data secure and private in FitSync?</h3>
                     <div class="faq-answer">
                         <p>Absolutely. FitSync takes data security seriously:</p>
@@ -452,7 +578,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="general">
                     <h3 class="faq-question">Does FitSync work offline?</h3>
                     <div class="faq-answer">
                         <p>Yes! FitSync includes robust offline functionality:</p>
@@ -466,7 +592,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="general">
                     <h3 class="faq-question">Is FitSync free to use?</h3>
                     <div class="faq-answer">
                         <p>FitSync offers both free and premium features:</p>
@@ -479,7 +605,7 @@
                     </div>
                 </div>
 
-                <div class="faq-item">
+                <div class="faq-item" data-category="general">
                     <h3 class="faq-question">Can I export my data from FitSync?</h3>
                     <div class="faq-answer">
                         <p>It is coming soon!:</p>
@@ -519,6 +645,7 @@
             </div>
             <div class="footer-links">
                 <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-use/">Terms of Use</a>
                 <a href="/about-creator/">About The Creator</a>
             </div>
             <p>&copy; 2024 FitSync. All rights reserved. The revolutionary all-in-one fitness platform for everyone.</p>
@@ -527,21 +654,30 @@
 
     <script src="../js/main.js"></script>
     <script>
-        // FAQ Accordion Functionality
+        // FAQ Search and Filter Functionality
         document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('faq-search');
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const faqItems = document.querySelectorAll('.faq-item');
+            const faqSections = document.querySelectorAll('.faq-section');
+            const resultsCount = document.getElementById('results-count');
             const faqQuestions = document.querySelectorAll('.faq-question');
-            
+
+            let currentCategory = 'all';
+            let currentSearch = '';
+
+            // FAQ Accordion Functionality
             faqQuestions.forEach(question => {
                 question.addEventListener('click', function() {
                     const answer = this.nextElementSibling;
                     const isActive = this.classList.contains('active');
-                    
+
                     // Close all other FAQ items
                     faqQuestions.forEach(q => {
                         q.classList.remove('active');
                         q.nextElementSibling.classList.remove('active');
                     });
-                    
+
                     // Toggle current item
                     if (!isActive) {
                         this.classList.add('active');
@@ -549,6 +685,107 @@
                     }
                 });
             });
+
+            // Search Functionality
+            searchInput.addEventListener('input', function() {
+                currentSearch = this.value.toLowerCase().trim();
+                filterFAQs();
+            });
+
+            // Category Filter Functionality
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Update current category
+                    currentCategory = this.getAttribute('data-category');
+                    filterFAQs();
+                });
+            });
+
+            // Main Filter Function
+            function filterFAQs() {
+                let visibleCount = 0;
+                let hasVisibleItems = {};
+
+                // Initialize section visibility tracking
+                faqSections.forEach(section => {
+                    hasVisibleItems[section.querySelector('h2').textContent] = false;
+                });
+
+                faqItems.forEach(item => {
+                    const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                    const category = item.getAttribute('data-category');
+                    const section = item.closest('.faq-section');
+                    const sectionTitle = section.querySelector('h2').textContent;
+
+                    // Check if item matches current filters
+                    const matchesCategory = currentCategory === 'all' || category === currentCategory;
+                    const matchesSearch = currentSearch === '' ||
+                        question.includes(currentSearch) ||
+                        answer.includes(currentSearch);
+
+                    if (matchesCategory && matchesSearch) {
+                        item.classList.remove('hidden');
+                        hasVisibleItems[sectionTitle] = true;
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                        // Close accordion if open
+                        item.querySelector('.faq-question').classList.remove('active');
+                        item.querySelector('.faq-answer').classList.remove('active');
+                    }
+                });
+
+                // Hide/show sections based on whether they have visible items
+                faqSections.forEach(section => {
+                    const sectionTitle = section.querySelector('h2').textContent;
+                    if (hasVisibleItems[sectionTitle]) {
+                        section.classList.remove('hidden');
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+
+                // Update results count
+                updateResultsCount(visibleCount);
+
+                // Show "no results" message if needed
+                showNoResultsMessage(visibleCount === 0);
+            }
+
+            // Update Results Count
+            function updateResultsCount(count) {
+                const totalItems = faqItems.length;
+                if (currentSearch !== '' || currentCategory !== 'all') {
+                    resultsCount.textContent = `Showing ${count} of ${totalItems} questions`;
+                } else {
+                    resultsCount.textContent = `${totalItems} questions available`;
+                }
+            }
+
+            // Show/Hide No Results Message
+            function showNoResultsMessage(show) {
+                let noResultsDiv = document.querySelector('.no-results');
+
+                if (show && !noResultsDiv) {
+                    noResultsDiv = document.createElement('div');
+                    noResultsDiv.className = 'no-results';
+                    noResultsDiv.innerHTML = `
+                        <h3>No Results Found</h3>
+                        <p>Try adjusting your search terms or selecting a different category.</p>
+                    `;
+                    document.querySelector('.faq-content').appendChild(noResultsDiv);
+                } else if (!show && noResultsDiv) {
+                    noResultsDiv.remove();
+                }
+            }
+
+            // Initialize display
+            filterFAQs();
         });
     </script>
 </body>
