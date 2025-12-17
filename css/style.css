@@ -2060,6 +2060,21 @@ footer {
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
+    align-items: center;
+}
+
+.app-store-badge {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.app-store-badge img {
+    height: 50px;
+    width: auto;
+}
+
+.app-store-badge:hover {
+    transform: scale(1.05);
 }
 
 .store-button {
