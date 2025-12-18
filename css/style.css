@@ -2077,6 +2077,20 @@ footer {
     transform: scale(1.05);
 }
 
+.google-play-badge {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.google-play-badge img {
+    height: 50px;
+    width: auto;
+}
+
+.google-play-badge:hover {
+    transform: scale(1.05);
+}
+
 .store-button {
     display: inline-flex;
     align-items: center;
