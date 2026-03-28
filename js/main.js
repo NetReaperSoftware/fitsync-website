@@ -1,4 +1,4 @@
-// FitSync Website JavaScript
+// UltraSync Website JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for navigation links

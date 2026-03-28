@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password - FitSync</title>
+    <title>Reset Password - UltraSync</title>
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <header>
         <nav class="container">
-            <div class="logo">FitSync</div>
+            <div class="logo">UltraSync</div>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
                 <li><a href="/about/">About</a></li>
@@ -46,7 +46,7 @@
                     <div id="reset-form" class="reset-card hidden">
                         <div class="status-icon">🔒</div>
                         <h1>Reset Your Password</h1>
-                        <p>Enter your new password below to secure your FitSync account.</p>
+                        <p>Enter your new password below to secure your UltraSync account.</p>
                         
                         <form id="passwordForm" class="password-form">
                             <div class="form-group">
@@ -84,7 +84,7 @@
                         
                         <div class="form-footer">
                             <a href="fitsync://auth/login" class="deep-link-button">
-                                Return to FitSync App
+                                Return to UltraSync App
                             </a>
                         </div>
                     </div>
@@ -93,10 +93,10 @@
                     <div id="error-state" class="reset-card hidden">
                         <div class="status-icon error">❌</div>
                         <h1 id="error-title">Invalid Reset Link</h1>
-                        <p id="error-message" class="error-text">This password reset link is invalid or has expired. Please request a new password reset from the FitSync app.</p>
+                        <p id="error-message" class="error-text">This password reset link is invalid or has expired. Please request a new password reset from the UltraSync app.</p>
                         <div class="form-footer">
                             <a href="fitsync://auth/login" class="deep-link-button">
-                                Open FitSync App
+                                Open UltraSync App
                             </a>
                         </div>
                     </div>
@@ -105,11 +105,11 @@
                     <div id="success-state" class="reset-card hidden">
                         <div class="status-icon success">✅</div>
                         <h1>Password Reset Successfully!</h1>
-                        <p class="success-text">Your password has been updated. You can now log in to FitSync with your new password.</p>
-                        <p class="redirect-text">Redirecting to FitSync app...</p>
+                        <p class="success-text">Your password has been updated. You can now log in to UltraSync with your new password.</p>
+                        <p class="redirect-text">Redirecting to UltraSync app...</p>
                         <div class="form-footer">
                             <a href="fitsync://auth/password-reset-success" class="cta-button primary">
-                                Continue to FitSync
+                                Continue to UltraSync
                             </a>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="info-item">
                         <h3>📱 Continue in App</h3>
-                        <p>After resetting your password, you'll be redirected back to the FitSync app to continue your fitness journey.</p>
+                        <p>After resetting your password, you'll be redirected back to the UltraSync app to continue your fitness journey.</p>
                     </div>
                     <div class="info-item">
                         <h3>🆘 Need Help?</h3>
@@ -140,7 +140,7 @@
     <footer>
         <div class="container">
             <div class="app-download-cta">
-                <h3>Don't Have FitSync Yet?</h3>
+                <h3>Don't Have UltraSync Yet?</h3>
                 <p>Get the revolutionary all-in-one fitness platform today</p>
                 <div class="store-buttons">
                     <a href="https://apps.apple.com/us/app/fitsync-fitness-tracker/id6749923790" class="app-store-badge">
@@ -156,7 +156,7 @@
                 <a href="/terms-of-use/">Terms of Use</a>
                 <a href="/about-creator/">About The Creator</a>
             </div>
-            <p>&copy; 2025 FitSync. All rights reserved. The revolutionary all-in-one fitness platform for everyone.</p>
+            <p>&copy; 2025 UltraSync. All rights reserved. The revolutionary all-in-one fitness platform for everyone.</p>
         </div>
     </footer>
 
@@ -344,13 +344,13 @@
                     
                     if (tokens.error === 'access_denied' && tokens.error_description?.includes('expired')) {
                         errorTitle.textContent = 'Reset Link Expired';
-                        errorMessage.textContent = 'This password reset link has expired. Password reset links are only valid for 1 hour. Please request a new password reset from the FitSync app.';
+                        errorMessage.textContent = 'This password reset link has expired. Password reset links are only valid for 1 hour. Please request a new password reset from the UltraSync app.';
                     } else if (tokens.error === 'access_denied') {
                         errorTitle.textContent = 'Access Denied';
-                        errorMessage.textContent = 'This password reset link has been denied access. Please request a new password reset from the FitSync app.';
+                        errorMessage.textContent = 'This password reset link has been denied access. Please request a new password reset from the UltraSync app.';
                     } else {
                         errorTitle.textContent = 'Reset Link Error';
-                        errorMessage.textContent = 'There was an error with this password reset link: ' + (tokens.error_description || tokens.error) + '. Please request a new password reset from the FitSync app.';
+                        errorMessage.textContent = 'There was an error with this password reset link: ' + (tokens.error_description || tokens.error) + '. Please request a new password reset from the UltraSync app.';
                     }
                     
                     showError();

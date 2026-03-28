@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Confirmed - Welcome to FitSync!</title>
+    <title>Email Confirmed - Welcome to UltraSync!</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <header>
         <nav class="container">
-            <div class="logo">FitSync</div>
+            <div class="logo">UltraSync</div>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
                 <li><a href="/about/">About</a></li>
@@ -26,7 +26,7 @@
                 <div class="hero-content">
                     <div class="success-icon">✅</div>
                     <h1>Email Confirmed!</h1>
-                    <p id="confirmation-message">Welcome to FitSync! Your email has been successfully verified. You're all set to start your intelligent fitness journey.</p>
+                    <p id="confirmation-message">Welcome to UltraSync! Your email has been successfully verified. You're all set to start your intelligent fitness journey.</p>
                 </div>
             </div>
         </section>
@@ -38,7 +38,7 @@
                     <div class="steps-grid">
                         <div class="step-card">
                             <span class="step-number">1</span>
-                            <h3>Download FitSync</h3>
+                            <h3>Download UltraSync</h3>
                             <p>Get the app on your mobile device to start tracking your fitness journey with advanced analytics and insights.</p>
                         </div>
                         <div class="step-card">
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="app-download-section">
-                    <h2>Download FitSync Now</h2>
+                    <h2>Download UltraSync Now</h2>
                     <p>Continue your fitness journey on mobile with our comprehensive tracking and analytics platform.</p>
                     
                     <div class="download-buttons">
@@ -80,15 +80,15 @@
                     </div>
 
                     <div class="deep-link-section">
-                        <p class="deep-link-text">Already have FitSync installed?</p>
+                        <p class="deep-link-text">Already have UltraSync installed?</p>
                         <a href="fitsync://confirm-email" class="deep-link-button" id="deepLinkButton">
-                            Open in FitSync App
+                            Open in UltraSync App
                         </a>
                     </div>
                 </div>
 
                 <div class="features-preview">
-                    <h2>What You'll Get with FitSync</h2>
+                    <h2>What You'll Get with UltraSync</h2>
                     <div class="preview-grid">
                         <div class="preview-item">
                             <span class="preview-icon">💪</span>
@@ -115,7 +115,7 @@
 
                 <div class="success-actions">
                     <h2>Get Started Today</h2>
-                    <p>Your FitSync account is ready. Download the app and begin tracking your fitness with the most intelligent platform available.</p>
+                    <p>Your UltraSync account is ready. Download the app and begin tracking your fitness with the most intelligent platform available.</p>
                     <div class="action-buttons">
                         <a href="/" class="cta-button secondary">Explore Features</a>
                         <a href="/about/" class="cta-button secondary">Learn More</a>
@@ -129,7 +129,7 @@
         <div class="container">
             <div class="app-download-cta">
                 <h3>Ready to Transform Your Fitness?</h3>
-                <p>Download FitSync and start your revolutionary fitness journey</p>
+                <p>Download UltraSync and start your revolutionary fitness journey</p>
                 <div class="store-buttons">
                     <a href="https://apps.apple.com/us/app/fitsync-fitness-tracker/id6749923790" class="app-store-badge">
                         <img src="../Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg" alt="Download on the App Store">
@@ -144,7 +144,7 @@
                 <a href="/terms-of-use/">Terms of Use</a>
                 <a href="/about-creator/">About The Creator</a>
             </div>
-            <p>&copy; 2025 FitSync. All rights reserved. The revolutionary all-in-one fitness platform for everyone.</p>
+            <p>&copy; 2025 UltraSync. All rights reserved. The revolutionary all-in-one fitness platform for everyone.</p>
         </div>
     </footer>
 
@@ -177,14 +177,14 @@
                 // Default success state
                 successIcon.textContent = '✅';
                 heroTitle.textContent = 'Email Confirmed!';
-                messageElement.textContent = 'Welcome to FitSync! Your email has been successfully verified. You\'re all set to start your intelligent fitness journey.';
+                messageElement.textContent = 'Welcome to UltraSync! Your email has been successfully verified. You\'re all set to start your intelligent fitness journey.';
             }
 
             // Try to open the app directly via deep link after a short delay
             if (!error && confirmed !== 'false') {
                 setTimeout(() => {
                     const deepLink = document.getElementById('deepLinkButton');
-                    if (deepLink && window.confirm('Would you like to open FitSync app now?')) {
+                    if (deepLink && window.confirm('Would you like to open UltraSync app now?')) {
                         deepLink.click();
                     }
                 }, 2000);
@@ -198,7 +198,7 @@
             
             // Fallback to app store if app not installed
             setTimeout(() => {
-                if (confirm('FitSync app not found. Would you like to download it?')) {
+                if (confirm('UltraSync app not found. Would you like to download it?')) {
                     // Detect mobile OS and redirect accordingly
                     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
                     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
